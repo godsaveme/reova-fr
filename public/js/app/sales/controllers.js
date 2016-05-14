@@ -1074,6 +1074,7 @@
                 //------------------------------------
                 //------------------------------------
                 $scope.calcularmontos=function(index){
+
                     if($scope.compras[index].oferta==undefined){
                           $scope.compras[index].oferta=0;
                     }
@@ -1091,11 +1092,11 @@
                     $scope.sale.montoTotal=$scope.sale.montoTotalSinDescuento-$scope.compras[index].subTotal;
 
                     if($scope.bandera){
-                        $scope.compras[index].precioVenta=((100-Number($scope.compras[index].descuento))*Number($scope.compras[index].precioProducto))/100;
+                        $scope.compras[index].precioVenta=Number((((100-Number($scope.compras[index].descuento))*Number($scope.compras[index].precioProducto))/100).toFixed(2));
                     }else{
-                        $scope.compras[index].descuento=((Number($scope.compras[index].precioProducto)-Number($scope.compras[index].precioVenta))*100)/Number($scope.compras[index].precioProducto);
+                        $scope.compras[index].descuento=Number((((Number($scope.compras[index].precioProducto)-Number($scope.compras[index].precioVenta))*100)/Number($scope.compras[index].precioProducto)).toFixed(2));
                     }
-                    $scope.compras[index].subTotal=$scope.compras[index].cantidad*Number($scope.compras[index].precioVenta);
+                    $scope.compras[index].subTotal=Number(($scope.compras[index].cantidad*Number($scope.compras[index].precioVenta)).toFixed(2));
 
                     $scope.sale.montoTotal=$scope.sale.montoTotal+$scope.compras[index].subTotal;
                     $scope.recalcularCompra();
@@ -1132,7 +1133,7 @@
                      });
                       }
                 };
-
+               
                 $scope.aumentarCantidad= function(index){
                     if ($scope.compras[index].equivalencia!=undefined) {
                         //$log.log($scope.compras);
@@ -1166,11 +1167,13 @@
                 $scope.aumentarPrecio= function(index){
                     $scope.compras[index].precioVenta=Number($scope.compras[index].precioVenta)+1;
                     $scope.ActivaOfertasx=false;
+                    $scope.bandera=false;
                     $scope.calcularmontos(index);
                 };
                 $scope.disminuirPrecio= function(index){
                     $scope.compras[index].precioVenta=Number($scope.compras[index].precioVenta)-1;
                     $scope.ActivaOfertasx=false;
+                    $scope.bandera=false;
                     $scope.calcularmontos(index);
                 };
                 $scope.aumentarDescuento= function(index){
@@ -1187,6 +1190,7 @@
                 };
                 $scope.modifMontosFinales=function(index){
                     $scope.ActivaOfertasx=false;
+                    $scope.bandera=false;
                     $scope.calcularmontos(index);
                 }
                 $scope.keyUpDescuento= function(index){
@@ -1241,10 +1245,10 @@
                 
                 $scope.sacarRow=function(index,total){
                     $scope.sale.montoTotal=$scope.sale.montoTotalSinDescuento-$scope.compras[index].subTotal;
-                    
+                    $scope.compras.splice(index,1);
                     $scope.recalcularCompra();
 
-                    $scope.compras.splice(index,1);
+                    
                     if($scope.compras.length<1){
                         $scope.sale.descuento=0;    
                     }
@@ -1287,12 +1291,18 @@
                         $scope.recalcularCompra();
           }
                }
+               $scope.sale.totalDescuentos=0;
                 $scope.recalcularCompra=function(){
+                    $scope.sale.totalDescuentos=0;
+                        for (i = 0; i < $scope.compras.length; i++) { 
+                              $scope.sale.totalDescuentos=$scope.sale.totalDescuentos+$scope.compras[i].descuento;
+                        }
                     $scope.sale.montoTotalSinDescuento=$scope.sale.montoTotal;
                     $scope.sale.montoTotal=((100-Number($scope.sale.descuento))*Number($scope.sale.montoTotalSinDescuento))/100;    
 
                     $scope.sale.montoBruto=Number($scope.sale.montoTotal)/1.18;
                     $scope.sale.igv=$scope.sale.montoTotal-$scope.sale.montoBruto;  
+
                 };
 
                 
@@ -2035,6 +2045,7 @@
                         });
                     }
                 }
+                
               /* $scope.createsalidaCaja = function(tipo){
                     if ($scope.cash1.cashHeader_id==undefined) {
                         alert("Elija Caja");

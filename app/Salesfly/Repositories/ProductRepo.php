@@ -304,7 +304,8 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                             ->leftjoin('equiv','equiv.preFin_id','=','T1.id')
                             ->join('detPres','detPres.variant_id','=','variants.id')             
                             ->join('presentation as T2','T2.id','=','detPres.presentation_id')
-                            ->select(\DB::raw('variants.puntos,variants.sku as SKU ,detPres.id as detPre_id,variants.id as vari ,
+                            ->select(\DB::raw('variants.puntos,variants.sku as SKU ,detPres.id as detPre_id,variants.id as vari ,(SELECT stockActual FROM stock where warehouse_id<>'.$were.' and variant_id=vari)
+                                    as stock2,
 
                                 IF(products.hasVariants=1 , CONCAT(products.nombre,"(",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /")
                                  FROM variants
@@ -532,7 +533,7 @@ WHERE variants.id = varid) as stoStockActual'),
                             ->join ('stores as T9', 'T9.id', '=', 'T8.store_id')  
 
                             ->select(\DB::raw('T6.puntos,products.nombre as Producto,T6.sku as codigo,T6.id as vari ,T7.stockActual as stock,T10.nombre as Linea,T12.nombre as Mate,
-                                                T13.price as Precio,T13.dsctoRange,
+                                                T13.price as Precio,T13.dsctoRange,T13.suppPri,
 
                                                 IF( T13.fecIniDscto<="'.$q.'" and T13.fecFinDscto>="'.$q.'",T13.dsctoRange,T13.dscto) as Descuento ,
                                                 IF( T13.fecIniDscto<="'.$q.'" and T13.fecFinDscto>="'.$q.'",T13.pvpRange,T13.pvp) as PrecioVenta ,

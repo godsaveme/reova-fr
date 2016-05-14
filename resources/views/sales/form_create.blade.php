@@ -91,7 +91,7 @@
                                   <button data-toggle="popover" popover-template="dynamicPopover.templateUrl" type="button" class="btn btn-default">@{{compras[$index].cantidad}}</button>
                               </td>
                               <td><a popover-template="dynamicPopover5.templateUrl" popover-trigger="mouseenter">@{{compras[$index].NombreAtributos}}</a></td>
-                              <td>
+                              <td><spam style="color:blue;">Pre:@{{compras[$index].precioProducto}}</spam>
                                   <button data-toggle="popover" popover-template="dynamicPopover1.templateUrl" type="button" class="btn btn-default">@{{compras[$index].precioVenta| number:2}}</button>
                               </td>
                               <td>@{{compras[$index].subTotal | number:2}}</td>
@@ -167,10 +167,11 @@
                                 <td>@{{sale.igv | number:2}}</td>                    
                                 </tr> 
                                 <tr style="border-bottom: solid; border-width: medium;">
-                                <td>Descuento</td>
-                                <td>
+                                <td>Descuento Total</td>
+                                <td ng-show="false">
                                   <button popover-template="dynamicPopover2.templateUrl" type="button" class="btn btn-default">@{{sale.descuento | number:2}}</button>
-                                </td>                    
+                                </td> 
+                                <td>@{{sale.totalDescuentos | number:2}}</td>                    
                                 </tr> 
                                 <tr>
                                 <td ><b>Total</b></td>
@@ -433,7 +434,7 @@
                   <div class="tab-pane" id="tab_5">
                       
                       
-                    
+                    <div class="box-body table-responsive no-padding">
                     <table class="table table-bordered">
                     <tr>
                       <th style="width: 10px">#</th>
@@ -458,9 +459,10 @@
                       <th>Cantidad</th>
                       <th>Stock</th>
                       <th>Descuento</th>
-                      <th>Descuento Rango</th>
+                      <th ng-show="false">Descuento Rango</th>
                       <th>Precio Normal</th>
                       <th>Precio Oferta</th>
+                      <th>Ganancia</th>
                       <th>Puntos</th>
                     </tr>
                     
@@ -473,16 +475,19 @@
                       <td>@{{row.Color}}</td>
                       <td>@{{row.Tallas}}</td>
                       <td>@{{row.stock}}</td>
-                      <td>@{{row.Descuento}}%</td>
-                      <td>@{{row.dsctoRange}}%</td>
+                      <td>@{{
+                      ((row.Precio-row.PrecioVenta)*100)/(row.Precio) | number:2}}</td>
+                      <td ng-show="false">@{{row.dsctoRange}}%</td>
                       <td>@{{row.Precio}}</td>
-                      <td ng-if="row.Estado=='SI'" style="color:blue">@{{row.PrecioVenta}}</td>
-                      <td ng-if="row.Estado=='NO'">@{{row.PrecioVenta}}</td>
+
+                      
+                      <td ><input string-to-number style="width:60px;" type="number" ng-model="row.PrecioVenta" ng-change="recalculGanancia(row,$index)"></td>
+                      <td >@{{row.PrecioVenta-row.suppPri}}</td>
                       <td>@{{row.puntos}}</td>
                     </tr>
                     
                     
-                  </table>
+                  </table></div>
                     <div class="box-footer clearfix">
                         <pagination total-items="totalItemsZ" ng-model="currentPageZ" max-size="maxSizeZ" class="pagination-sm no-margin pull-right" 
                         items-per-page="itemsperPageZ" boundary-links="true" rotate="false" num-pages="numPages" ng-change="pageChangedZ()"></pagination>
@@ -742,11 +747,11 @@
         </div>
 
         <div>
-        <label>Pedidos : </label>
-        <label>@{{compras[$index].stockPedidos}}</label>
+        <label>Stcok A.secun : </label>
+        <label>@{{compras[$index].stock2}}</label>
         </div>
 
-        <div>
+        <!--<div>
         <label>Separados : </label>
         <label>@{{compras[$index].stockSeparados}}</label>
         </div>
@@ -754,7 +759,7 @@
         <div>
         <label>precio : </label>
         <label>@{{compras[$index].precioProducto}}</label>
-        </div>
+        </div>-->
           
                  
     </script>

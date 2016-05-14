@@ -341,8 +341,8 @@
 
 <!-- =============================Modal de Presentacion ================================ -->
 
-<div class="modal fade bs-example-modal-sm" id="presentation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-md"  role="document">
+<div class="modal fade bs-example-modal-lg" id="presentation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg"  role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -351,9 +351,12 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                   <div class="col-md-6">
+                   
+                   <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label for="suppPric">Elige Presentación(Unidades, paquetes, six pack.)</label>
+                            <label for="suppPric">Elige Presentación(Unidades, paquetes)</label>
                             <select name="" ng-click="selectPres()" class="form-control" id="" ng-model="presentationSelect" ng-options="item as item.nombre+' / '+item.shortname+' / '+item.cant for item in presentations">
                                 <option value="">-- Elige Presentación--</option>
                             </select>
@@ -364,14 +367,16 @@
                         <label for="suppPric">Cambio de Dolar</label>
                         <input type="number" name="table_search" class="form-control pull-rigt" string-to-number ng-model="presentation.cambioDolar" ng-change="calculateCambioDolar()">
                     </div>
-                </div>
+                    </div>
+                  
+                
                 <div class="row">
                     <div class="col-md-4">
                         <input type="text" class="form-control hidden" name="presentation.nombre" ng-model="presentation.nombre">
                         <div class="form-group" >
-                            <label for="suppPric">Precio de Compra (S/.)</label>
+                            <label for="suppPric">Pre. Compra (S/.)</label>
                             <input type="number" class="form-control" name="suppPric1" string-to-number placeholder="0.00" ng-model="presentation.suppPri" ng-change="calculateSuppPric()" step="0.1">
-                            <label for="suppPric">Precio de Compra ($USS)</label>
+                            <label for="suppPric">Pre. Compra($USS)</label>
                             <input type="number" class="form-control" name="suppPriDolar" string-to-number placeholder="0.00" ng-model="presentation.suppPriDol" ng-change="calculateSuppPricDol()" step="0.1">
 
                         </div>
@@ -411,12 +416,15 @@
                         </div>
                     </div>
                 </div>
+                </div>
+                <div class="col-md-6">
+                
                 <div class="row">
-                    <div class="col-md-4">
-                        <h4>Descuentos por Rango</h4></div> <div class="col-md-4"><h4><input type="checkbox" ng-model="presentation.activateDsctoRange"> Activar</h4></div>
+                    <div class="col-md-6">
+                        <h4>Descuentos por Rango</h4></div> <div class="col-md-6"><h4><input type="checkbox" ng-model="presentation.activateDsctoRange"> Activar</h4></div>
                 </div>
                 <div class="row" ng-show="presentation.activateDsctoRange">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
 
                         <div class="form-group" >
                             <label for="suppPric">Fecha de Inicio</label>
@@ -424,7 +432,7 @@
 
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group" >
                             <label for="suppPric">Fecha de Fin</label>
                             <input type="date" class="form-control" ng-model="presentation.fecFinDscto" ng-change="">
@@ -458,6 +466,8 @@
                             <input ng-disabled="true" type="number" class="form-control" name="markup1" string-to-number placeholder="0.00" ng-model="presentation.markupCant2" ng-change="calculateMarkupCant()" step="0.1">
                         </div>
                     </div>
+                </div>
+                </div>
                 </div>
 
             </div>

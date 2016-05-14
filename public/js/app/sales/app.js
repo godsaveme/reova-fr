@@ -23,7 +23,19 @@
         });
     };
 });
-
+app.directive('stringToNumber', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                ngModel.$parsers.push(function(value) {
+                    return '' + value;
+                });
+                ngModel.$formatters.push(function(value) {
+                    return parseFloat(value, 10);
+                });
+            }
+        };
+    });
 angular.module('sales').controller('ModalInstanceCtrl', function ($scope,$log, $modalInstance,presentations,crudServiceOrders) {
 	$scope.presentations = presentations;
 	//$log.log($scope.presentations+"Hola");

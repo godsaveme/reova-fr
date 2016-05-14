@@ -789,8 +789,8 @@
                                     //$scope.varianteSkuSelected1[0].descuento=0;
                                     $scope.varianteSkuSelected1[0].subTotal=$scope.varianteSkuSelected1[0].cantidad*Number($scope.varianteSkuSelected1[0].precioProducto);
                                     $scope.varianteSkuSelected1[0].precioVenta=Number($scope.varianteSkuSelected1[0].precioProducto);
-                                  //alert($scope.varianteSkuSelected1[0].puntos);
-
+                                  //alert($scope.varianteSkuSelected1[0].stock2);
+                                    // $scope.varianteSkuSelected1[0].estockAlma=$scope.varianteSkuSelected1[0].stock2;
                                    $scope.compras.push($scope.varianteSkuSelected1[0]); 
 
 

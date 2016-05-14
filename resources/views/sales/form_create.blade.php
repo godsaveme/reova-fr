@@ -743,13 +743,17 @@
         </div>
 
         <div>
-        <label>Stock : </label>
-        <label>@{{compras[$index].Stock}}</label>
+        <label>Tienda : </label>
+        <label>@{{compras[$index].Stock | number:0}}</label>
         </div>
 
         <div>
-        <label>Stcok A.secun : </label>
-        <label>@{{compras[$index].stock2}}</label>
+        <label>Almacen : </label>
+        <label>@{{compras[$index].stock2 | number:0}}</label>
+        </div>
+        <div>
+        <label>Stock Tot: </label>
+        <label>@{{compras[$index].totStock | number:0}}</label>
         </div>
 
         <!--<div>
@@ -804,11 +808,16 @@
     <script type="text/ng-template" id="myPopoverTemplate1.html">
         
       <tabset justified="true">
-
-      <tab heading="Descuento">
-        <label>@{{dynamicPopover1.title1}}</label>
+     
+      <tab heading="PRECIOS">
+        <label>P.V.P.</label><spam> @{{compras[$index].precioProducto}}</spam> -------
+        <label>P.V.CLTE.</label><spam> @{{compras[$index].precioVenta}}</spam> <br><br>
+        
             <div class="row" >
-            <div class="col-md-9">
+            <div class="col-md-4">
+                     
+            <label>Desct.</label></div>
+            <div class="col-md-5">
             <input type="number" ng-model="compras[$index].descuento" ng-change="keyUpDescuento($index)"class="form-control">
           </div>
          <button type="button" class="btn btn-xs" ng-click="aumentarDescuento($index)">
@@ -818,12 +827,13 @@
 
         </div>
         </div>
-
-      </tab>
-      <tab heading="Precio Unidad"><div class="form-group">
-            <label>@{{dynamicPopover1.title}}</label>
+         
+          
             <div class="row" >
-            <div class="col-md-9">
+            <div class="col-md-4">
+                     
+            <label>@{{dynamicPopover1.title}}</label></div>
+            <div class="col-md-5">
             <input type="number" min="0" ng-change="modifMontosFinales($index)" ng-model="compras[$index].precioVenta" class="form-control">
           </div>
          <button type="button" class="btn btn-xs" ng-click="aumentarPrecio($index)">
@@ -833,8 +843,8 @@
 
         </div>
         </div> 
-
-        </tab>
+      </tab>
+    
       </tabset>
               
     </script>

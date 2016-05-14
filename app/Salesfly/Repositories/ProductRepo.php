@@ -305,7 +305,7 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                             ->join('detPres','detPres.variant_id','=','variants.id')             
                             ->join('presentation as T2','T2.id','=','detPres.presentation_id')
                             ->select(\DB::raw('variants.puntos,variants.sku as SKU ,detPres.id as detPre_id,variants.id as vari ,(SELECT stockActual FROM stock where warehouse_id<>'.$were.' and variant_id=vari)
-                                    as stock2,
+                                    as stock2,stock.stockActual+(SELECT stockActual FROM stock where warehouse_id<>'.$were.' and variant_id=vari) as totStock,
 
                                 IF(products.hasVariants=1 , CONCAT(products.nombre,"(",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /")
                                  FROM variants

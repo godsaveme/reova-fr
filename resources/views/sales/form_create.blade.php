@@ -91,10 +91,11 @@
                                   <button data-toggle="popover" popover-template="dynamicPopover.templateUrl" type="button" class="btn btn-default">@{{compras[$index].cantidad}}</button>
                               </td>
                               <td><a popover-template="dynamicPopover5.templateUrl" popover-trigger="mouseenter">@{{compras[$index].NombreAtributos}}</a></td>
-                              <td><spam style="color:blue;">Pre:@{{compras[$index].precioProducto}}</spam>
+                              <td><spam style="color:red;">@{{compras[$index].precioProducto}}</spam>
                                   <button data-toggle="popover" popover-template="dynamicPopover1.templateUrl" type="button" class="btn btn-default">@{{compras[$index].precioVenta| number:2}}</button>
                               </td>
-                              <td>@{{compras[$index].subTotal | number:2}}</td>
+                              <td><spam style="color:red;">-@{{(compras[$index].precioProducto-compras[$index].precioVenta)*compras[$index].cantidad | number:2}}</spam>
+                              @{{compras[$index].subTotal | number:2}}</td>
                               <td><button type="button" class="btn btn-danger ng-binding"  ng-click="sacarRow($index,row.subTotal)">
                               <span class="glyphicon glyphicon-trash"></span>
                               </td>                    
@@ -171,7 +172,7 @@
                                 <td ng-show="false">
                                   <button popover-template="dynamicPopover2.templateUrl" type="button" class="btn btn-default">@{{sale.descuento | number:2}}</button>
                                 </td> 
-                                <td>@{{sale.totalDescuentos | number:2}}</td>                    
+                                <td>-@{{sale.totalDescuentSoles | number:2}}<br>(@{{sale.totalDescuentos | number:2}}%)</td>                    
                                 </tr> 
                                 <tr>
                                 <td ><b>Total</b></td>

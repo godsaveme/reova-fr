@@ -1294,8 +1294,10 @@
                $scope.sale.totalDescuentos=0;
                 $scope.recalcularCompra=function(){
                     $scope.sale.totalDescuentos=0;
+                    $scope.sale.totalDescuentSoles=0;
                         for (i = 0; i < $scope.compras.length; i++) { 
                               $scope.sale.totalDescuentos=$scope.sale.totalDescuentos+$scope.compras[i].descuento;
+                              $scope.sale.totalDescuentSoles=$scope.sale.totalDescuentSoles+(($scope.compras[i].precioProducto-$scope.compras[i].precioVenta)*$scope.compras[i].cantidad);
                         }
                     $scope.sale.montoTotalSinDescuento=$scope.sale.montoTotal;
                     $scope.sale.montoTotal=((100-Number($scope.sale.descuento))*Number($scope.sale.montoTotalSinDescuento))/100;    

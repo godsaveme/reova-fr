@@ -152,7 +152,7 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                                 INNER JOIN atributes ON atributes.id = detAtr.atribute_id
                                 where variants.id=varid and atributes.id=4
                                 GROUP BY variants.id)as Mnombre,
-                              variants.codigo as varCodigo,detAtr.descripcion as descripcion,products.quantVar as proQuantvar,(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR "/") FROM variants
+                              variants.codigo as varCodigo,detAtr.descripcion as descripcion,products.quantVar as proQuantvar,(SELECT GROUP_CONCAT(CONCAT(detAtr.descripcion) SEPARATOR "/") FROM variants
                                 INNER JOIN detAtr ON detAtr.variant_id = variants.id
                                 INNER JOIN atributes ON atributes.id = detAtr.atribute_id
                                 where variants.id=varid
@@ -179,7 +179,7 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                             ->select(\DB::raw('products.id as proId,brands.nombre as BraName,types.nombre as TName,products.codigo as proCodigo,products.nombre as proNombre,
                               variants.id as varid,variants.sku as varcode,variants.suppPri as varPrice,variants.price as precioProducto,
                                products.hasVariants as TieneVariante,products.created_at as proCreado,brands.id as BraID,materials.id as MId
-                              ,materials.nombre as Mnombre,variants.codigo as varCodigo,detAtr.descripcion as descripcion,products.quantVar as proQuantvar,(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR "/") FROM variants
+                              ,materials.nombre as Mnombre,variants.codigo as varCodigo,detAtr.descripcion as descripcion,products.quantVar as proQuantvar,(SELECT GROUP_CONCAT(CONCAT(detAtr.descripcion) SEPARATOR "/") FROM variants
                                 INNER JOIN detAtr ON detAtr.variant_id = variants.id
                                 INNER JOIN atributes ON atributes.id = detAtr.atribute_id
                                 where variants.id=varid
@@ -260,11 +260,11 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                                 detPres.dsctoRange as DescuentoConFecha,detPres.dscto as DescuentoSinFecha,
 
                               stock.stockPedidos as stockPedidos,stock.stockSeparados as stockSeparados,
-                               IF(products.hasVariants=1 , CONCAT(variants.codigo," - ",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /") FROM variants
+                               IF(products.hasVariants=1 , CONCAT(products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(detAtr.descripcion) SEPARATOR " /") FROM variants
                                 LEFT JOIN detAtr ON detAtr.variant_id = variants.id
                                 LEFT JOIN atributes ON atributes.id = detAtr.atribute_id
                                 where variants.id=vari
-                                GROUP BY variants.id)),  CONCAT(variants.codigo," - ",products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen,
+                                GROUP BY variants.id)),  CONCAT(products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen,
                             equiv.cant as equivalencia, variants.favorite as favorite, variants.codigo as NombreAtributo'))
                              
                               //'T1.nombre as Base')
@@ -321,11 +321,11 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                                 detPres.fecIniDscto as FechaInicioDescuento,detPres.fecFinDscto as FechaFinDescuento,
                                 detPres.dsctoRange as DescuentoConFecha,detPres.dscto as DescuentoSinFecha,
 
-                              IF(products.hasVariants=1 , CONCAT(variants.codigo," - ",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /") FROM variants
+                              IF(products.hasVariants=1 , CONCAT(products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(detAtr.descripcion) SEPARATOR " /") FROM variants
                                 LEFT JOIN detAtr ON detAtr.variant_id = variants.id
                                 LEFT JOIN atributes ON atributes.id = detAtr.atribute_id
                                 where variants.id=vari
-                                GROUP BY variants.id)),  CONCAT(variants.codigo," - ",products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen,
+                                GROUP BY variants.id)),  CONCAT(products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen,
                             equiv.cant as equivalencia, variants.favorite as favorite, variants.codigo as NombreAtributo'))
                              
                               //'T1.nombre as Base')
@@ -370,11 +370,11 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                                 detPres.fecIniDscto as FechaInicioDescuento,detPres.fecFinDscto as FechaFinDescuento,
                                 detPres.dsctoRange as DescuentoConFecha,detPres.dscto as DescuentoSinFecha,
 
-                              IF(products.hasVariants=1 , CONCAT(variants.codigo," - ",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /") FROM variants
+                              IF(products.hasVariants=1 , CONCAT(products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(detAtr.descripcion) SEPARATOR " /") FROM variants
                                 LEFT JOIN detAtr ON detAtr.variant_id = variants.id
                                 LEFT JOIN atributes ON atributes.id = detAtr.atribute_id
                                 where variants.id=vari
-                                GROUP BY variants.id)),  CONCAT(variants.codigo," - ",products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen,
+                                GROUP BY variants.id)),  CONCAT(products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen,
                             equiv.cant as equivalencia, variants.favorite as favorite, variants.codigo as NombreAtributo '))
                              
                               //'T1.nombre as Base')
@@ -411,11 +411,11 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                                 detPres.dsctoRange as DescuentoConFecha,detPres.dscto as DescuentoSinFecha,
 
                               stock.stockPedidos as stockPedidos,stock.stockSeparados as stockSeparados,
-                              variants.id as vari , IF(products.hasVariants=1 , CONCAT(variants.codigo," - ",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /") FROM variants
+                              variants.id as vari , IF(products.hasVariants=1 , CONCAT(products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(detAtr.descripcion) SEPARATOR " /") FROM variants
                                 LEFT JOIN detAtr ON detAtr.variant_id = variants.id
                                 LEFT JOIN atributes ON atributes.id = detAtr.atribute_id
                                 where variants.id=vari
-                                GROUP BY variants.id)),  CONCAT(variants.codigo," - ",products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen
+                                GROUP BY variants.id)),  CONCAT(products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen
                               ,T2.base as base, equiv.cant as equivalencia, variants.favorite as favorite ,variants.codigo as NombreAtributo'))
                              
                               //'T1.nombre as Base')
@@ -492,11 +492,11 @@ WHERE variants.id = varid) as stoStockActual'),
                                 detPres.dsctoRange as DescuentoConFecha,detPres.dscto as DescuentoSinFecha,
 
                               stock.stockPedidos as stockPedidos,stock.stockSeparados as stockSeparados,
-                               IF(products.hasVariants=1 , CONCAT(variants.codigo," - ",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /") FROM variants
+                               IF(products.hasVariants=1 , CONCAT(products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(detAtr.descripcion) SEPARATOR " /") FROM variants
                                 LEFT JOIN detAtr ON detAtr.variant_id = variants.id
                                 LEFT JOIN atributes ON atributes.id = detAtr.atribute_id
                                 where variants.id=vari
-                                GROUP BY variants.id)),  CONCAT(variants.codigo," - ",products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen
+                                GROUP BY variants.id)),  CONCAT(products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen
                               ,T2.base as base, equiv.cant as equivalencia, variants.favorite as favorite,variants.codigo as NombreAtributo '))
                              
                               //'T1.nombre as Base')

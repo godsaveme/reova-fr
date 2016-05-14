@@ -643,8 +643,8 @@
                                 if (data['estado'] == true) {
                                     //$scope.success = data['nombres'];
                                     alert('Variante creada con Éxito');
-                                    $location.path('/products/show/'+$scope.product.id);
-
+                                    //$location.path('/products/show/'+$scope.product.id);
+                                     $btn.button('reset');
                                 } else {
                                     $scope.errors = data;
                                     $btn.button('reset');
@@ -668,8 +668,8 @@
                                 if (data['estado'] == true) {
                                     //$scope.success = data['nombres'];
                                     alert('Variante creada con Éxito');
-                                    $location.path('/products/show/'+$scope.product.id);
-
+                                    //$location.path('/products/show/'+$scope.product.id);
+                                     $btn.button('reset');
                                 } else {
                                     $scope.errors = data;
                                     $btn.button('reset');

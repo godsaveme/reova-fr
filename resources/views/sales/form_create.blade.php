@@ -482,7 +482,7 @@
 
                       
                       <td ><input string-to-number style="width:60px;" type="number" ng-model="row.PrecioVenta" ng-change="recalculGanancia(row,$index)"></td>
-                      <td >@{{row.PrecioVenta-row.suppPri}}</td>
+                      <td >@{{row.PrecioVenta-row.suppPri | number:2}}</td>
                       <td>@{{row.puntos}}</td>
                     </tr>
                     

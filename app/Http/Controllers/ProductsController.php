@@ -82,6 +82,11 @@ class ProductsController extends Controller
         $products = $this->productRepo->misDatos($store, $were, $q);
         return response()->json($products);
     }
+    public function misDatos2($store,$were,$q)
+    {
+        $products = $this->productRepo->misDatos2($store, $were, $q);
+        return response()->json($products);
+    }
     public function searchsku($store,$were,$q)
     {
         $products = $this->productRepo->searchsku($store, $were, $q);

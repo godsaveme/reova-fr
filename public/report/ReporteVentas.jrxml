@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteVentas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8ef771bc-de0e-41a0-9d1d-a47119ea8c9f">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="212"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fechaini" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -149,21 +149,21 @@
 				<text><![CDATA[Talla]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="459" y="0" width="49" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="df345938-84d2-447a-949f-2dec179b67ed"/>
+				<reportElement mode="Opaque" x="447" y="0" width="39" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="df345938-84d2-447a-949f-2dec179b67ed"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[P. Com.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="508" y="0" width="46" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="13c2b3a2-12fd-49f5-a639-c49fcb919837"/>
+				<reportElement mode="Opaque" x="486" y="0" width="39" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="13c2b3a2-12fd-49f5-a639-c49fcb919837"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gan.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="363" y="1" width="95" height="9" forecolor="#006699" backcolor="#E6E6E6" uuid="c91eba97-d9f2-4383-99bf-eac91b93ea25"/>
+				<reportElement mode="Opaque" x="363" y="1" width="84" height="9" forecolor="#006699" backcolor="#E6E6E6" uuid="c91eba97-d9f2-4383-99bf-eac91b93ea25"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -177,11 +177,18 @@
 				<text><![CDATA[Efectivo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="411" y="11" width="47" height="9" forecolor="#490099" backcolor="#E6E6E6" uuid="06165279-82dd-407c-b2a4-5096542d15e6"/>
+				<reportElement mode="Opaque" x="411" y="11" width="36" height="9" forecolor="#490099" backcolor="#E6E6E6" uuid="06165279-82dd-407c-b2a4-5096542d15e6"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tarjeta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="525" y="0" width="30" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="fda5ad79-b3cd-4b77-980c-b4bca465fa38"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. Venta]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -261,14 +268,14 @@
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="459" y="0" width="49" height="20" forecolor="#FF0000" uuid="34465faa-1e79-44ba-9b61-8f29d6f93f80"/>
+				<reportElement x="447" y="0" width="39" height="20" forecolor="#FF0000" uuid="34465faa-1e79-44ba-9b61-8f29d6f93f80"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA["S/."+$F{precioCompra}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="508" y="0" width="46" height="20" forecolor="#00FF00" uuid="734310c4-199f-4580-a0b8-6c0c7ff0ef9e"/>
+				<reportElement x="486" y="0" width="39" height="20" forecolor="#0032FF" uuid="734310c4-199f-4580-a0b8-6c0c7ff0ef9e"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -282,11 +289,18 @@
 				<textFieldExpression><![CDATA[$F{totEfectivo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="411" y="0" width="47" height="20" forecolor="#490099" uuid="d8f003f7-07cb-496a-813c-3e12d6052bef"/>
+				<reportElement x="411" y="0" width="36" height="20" forecolor="#490099" uuid="d8f003f7-07cb-496a-813c-3e12d6052bef"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totTarjeta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="525" y="0" width="50" height="20" uuid="546416e4-24f3-4f10-89ef-d2fe775e86c6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subTotal}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

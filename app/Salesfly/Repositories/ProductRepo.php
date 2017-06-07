@@ -159,8 +159,11 @@ WHERE products.presentation_base = presentation.id and products.id = proId and p
                             ->leftjoin('stock','stock.variant_id','=','variants.id')
                             ->select('variants.codigo','variants.sku','variants.id as varid','products.estado as proEstado',
                                'brands.nombre as braNombre','products.hasVariants as TieneVariante','types.nombre as typNombre',
+                              
                               \DB::raw('(select dt.descripcion from detAtr dt inner join variants v on v.id=dt.variant_id inner join atributes atr on atr.id=dt.atribute_id where v.id=varid and atr.nombre="Color" and dt.descripcion like "'.$busColor.'%") as color'),
-                              \DB::raw('(SELECT sum(stock.stockActual)     
+                              \DB::raw('variants.id as idvariante,(SELECT SUM(detSeparateSales.cantidad) FROM separateSales INNER JOIN detSeparateSales ON detSeparateSales.separateSale_id=
+                                separateSales.id INNER JOIN detPres ON detSeparateSales.detPre_id=detPres.id 
+                                WHERE detPres.variant_id=idvariante and (separateSales.estado=0 OR separateSales.estado=1))as separado,(SELECT sum(stock.stockActual)     
 FROM products
 INNER JOIN variants ON products.id = variants.product_id
 INNER JOIN stock ON variants.id = stock.variant_id
@@ -291,7 +294,67 @@ WHERE variants.id = varid) as stoStockActual'),
 
 
     }
+    public function misDatos2($store,$were,$q){
+      $datos = \DB::table('products')->leftjoin('materials','products.material_id','=','materials.id')
+                           ->leftjoin('variants','products.id','=','variants.product_id')
+                            ->leftjoin('stock','variants.id','=','stock.variant_id')
+                            ->leftjoin('warehouses','warehouses.id','=','stock.warehouse_id')
+                            ->leftjoin('stores','stores.id','=','warehouses.store_id')
+                            ->leftjoin('presentation as T1','T1.id','=','products.presentation_base')
+                            ->leftjoin('equiv','equiv.preFin_id','=','T1.id')
+                            ->leftjoin('detAtr','variants.id','=','detAtr.variant_id')
+                            ->join('detPres','detPres.variant_id','=','variants.id')
+                            ->join('presentation as T2','T2.id','=','detPres.presentation_id')
+                            ->select(\DB::raw('variants.sku as SKU ,detPres.id as detPre_id,variants.id as vari ,detPres.pvp as pvp, detPres.dscto as dscto,
 
+                                IF(products.hasVariants=1 , CONCAT(products.nombre,"(",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /")
+                                 FROM variants
+                                LEFT JOIN detAtr ON detAtr.variant_id = variants.id
+                                LEFT JOIN atributes ON atributes.id = detAtr.atribute_id
+                                where variants.id=vari
+                                GROUP BY variants.id),")"),  products.nombre ) as NombreProducto,
+
+                                materials.nombre as Material,
+                              warehouses.nombre as Almacen,stock.stockActual as Stock,detPres.price as precioProducto,
+                              stock.stockPedidos as stockPedidos,stock.stockSeparados as stockSeparados,
+                               IF(products.hasVariants=1 , CONCAT(variants.codigo," - ",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /") FROM variants
+                                LEFT JOIN detAtr ON detAtr.variant_id = variants.id
+                                LEFT JOIN atributes ON atributes.id = detAtr.atribute_id
+                                where variants.id=vari
+                                GROUP BY variants.id)),  CONCAT(variants.codigo," - ",products.nombre) ) as NombreAtributos , T1.nombre as Base, T2.nombre as Presentacion, products.presentation_base, warehouses.id as idAlmacen,
+                            equiv.cant as equivalencia, variants.favorite as favorite, variants.codigo as NombreAtributo'))
+                             
+                              //'T1.nombre as Base')
+                            ->where('stores.id','=',$store)
+                            ->where('warehouses.id','=',$were)
+                            ->where('variants.codigo','like', ''.$q.'%')
+                            ->where('T2.base','=','1')
+                            /////--------------------
+                            ->where('products.estado','=','1')
+                            ->where('variants.estado','=','1')
+                    //->where('detAtr.descripcion','like','%'.$q.'%')
+                            /////--------------------
+                            //->where('variants.estado','=','1')
+                            //->where('products.estado','=','1')
+                            ->orWhere('stores.id','=',$store)
+                            ->where('warehouses.id','=',$were)
+                            ->where('products.nombre','like', ''.$q.'%')
+                            ->where('T2.base','=','1')
+                            /////--------------------
+                            ->where('products.estado','=','1')
+                            ->where('variants.estado','=','1')
+          //->where('detAtr.descripcion','likes','%'.$q.'%')
+                            /////--------------------
+                            //->where('variants.estado','=','1')
+                            //->where('products.estado','=','1')
+
+
+
+
+                            ->groupBy('variants.id')
+                            ->get();
+            return $datos;
+    }
     public function misDatos($store,$were,$q){
       $datos = \DB::table('products')->leftjoin('materials','products.material_id','=','materials.id')
                            ->leftjoin('variants','products.id','=','variants.product_id')
@@ -303,7 +366,7 @@ WHERE variants.id = varid) as stoStockActual'),
                             ->leftjoin('detAtr','variants.id','=','detAtr.variant_id')
                             ->join('detPres','detPres.variant_id','=','variants.id')
                             ->join('presentation as T2','T2.id','=','detPres.presentation_id')
-                            ->select(\DB::raw('variants.sku as SKU ,detPres.id as detPre_id,variants.id as vari ,
+                            ->select(\DB::raw('variants.sku as SKU ,detPres.id as detPre_id,variants.id as vari ,detPres.pvp as pvp, detPres.dscto as dscto,
 
                                 IF(products.hasVariants=1 , CONCAT(products.nombre,"(",products.nombre,"/ ",(SELECT GROUP_CONCAT(CONCAT(atributes.shortname,":",detAtr.descripcion) SEPARATOR " /")
                                  FROM variants

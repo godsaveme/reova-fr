@@ -61,29 +61,29 @@
 				<text><![CDATA[fechaInicio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="217" y="0" width="119" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="cce2e288-a14f-4ec3-9870-f9731395fd84"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="248" y="0" width="98" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="cce2e288-a14f-4ec3-9870-f9731395fd84"/>
+				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nov. Tarjeta]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="336" y="0" width="117" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1172ea6d-df9b-419b-ab08-d69f5087a1ce"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="346" y="0" width="107" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1172ea6d-df9b-419b-ab08-d69f5087a1ce"/>
+				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mov. Efectivo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="89" y="0" width="128" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="eca49015-c650-44ee-a62b-8ebbf792c12a"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="89" y="0" width="159" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="eca49015-c650-44ee-a62b-8ebbf792c12a"/>
+				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tipo de Movimiento]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="438" y="0" width="117" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="f0ea8fb5-62f1-4944-8829-b8685a742346"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Descripcion]]></text>
@@ -96,14 +96,14 @@
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="f10790a7-c954-463f-a783-53413e26befd"/>
 			</line>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="248" y="0" width="88" height="20" uuid="d84fbc06-e81e-4a06-9758-f1c50c6872a0"/>
+				<reportElement x="248" y="0" width="98" height="20" uuid="d84fbc06-e81e-4a06-9758-f1c50c6872a0"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totMovTar}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="346" y="0" width="107" height="20" uuid="2f913c52-f7ca-481d-99a0-30ef33d86105"/>
+				<reportElement x="346" y="0" width="92" height="20" uuid="2f913c52-f7ca-481d-99a0-30ef33d86105"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
@@ -124,7 +124,7 @@
 				<textFieldExpression><![CDATA[$F{fechaInicio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="453" y="0" width="102" height="20" uuid="b4cfab75-8b3c-4b54-b221-e42204ac166e"/>
+				<reportElement x="438" y="0" width="117" height="20" uuid="b4cfab75-8b3c-4b54-b221-e42204ac166e"/>
 				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
 			</textField>
 		</band>

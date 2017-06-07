@@ -526,7 +526,7 @@
                       <td>@{{row.sku}}</td>
                       <td>@{{row.braNombre}}</td>
                       <td>@{{row.typNombre}}</td>
-                      <td>@{{row.stoStockActual}}</td>
+                      <td>@{{row.stoStockActual}}<spam ng-if="row.separado>0" style="color: red;">-@{{row.separado}}</spam></td>
                       <td>@{{row.color}}</td>
                       <td>@{{row.Taco}}</td>
                       <td>@{{row.Talla}}</td>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubReportVentas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="a79d4afb-19d5-41e9-81e3-a24b10014a80">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fechaini" class="java.lang.String">
@@ -19,7 +19,14 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select ROUND(SUM(detSeparateSales.cantidad),0) AS totalUnidades, ROUND(SUM(detPres.suppPri*detSeparateSales.cantidad),2) as totalPrecioCompra, ROUND(SUM(detSeparateSales.subTotal),2)as totalVentas, ROUND(SUM(detSeparateSales.subTotal-(detPres.suppPri*detSeparateSales.cantidad)),2) as totalGanacia,ROUND(SUM(salePayments.Acuenta),2) as totAcuenta,ROUND(SUM(salePayments.Saldo),2) AS totoSaldo from detSeparateSales
+		<![CDATA[select (select ROUND(SUM(detSeparateSales.cantidad),0) from detSeparateSales inner join separateSales on separateSales.id=detSeparateSales.separateSale_id  where separateSales.estado like $P{estado} and separateSales.tipo like $P{tipo} and detSeparateSales.created_at between $P{fechaini} and $P{fechafin}) AS totalUnidades,
+(select ROUND(SUM(detPres.suppPri*detSeparateSales.cantidad),2) from detSeparateSales inner join separateSales on separateSales.id=detSeparateSales.separateSale_id left join detPres on detPres.id=detSeparateSales.detPre_id where separateSales.estado like $P{estado} and separateSales.tipo like $P{tipo} and detSeparateSales.created_at between $P{fechaini} and $P{fechafin}) as totalPrecioCompra,
+(select ROUND(SUM(detSeparateSales.subTotal-(detPres.suppPri*detSeparateSales.cantidad)),2) from detSeparateSales inner join separateSales on separateSales.id=detSeparateSales.separateSale_id left join detPres on detPres.id=detSeparateSales.detPre_id where separateSales.estado like $P{estado} and separateSales.tipo like $P{tipo} and detSeparateSales.created_at between $P{fechaini} and $P{fechafin}) as totalGanacia,
+(select ROUND(SUM(detSeparateSales.subTotal),2) from detSeparateSales inner join separateSales on separateSales.id=detSeparateSales.separateSale_id  where separateSales.estado like $P{estado} and separateSales.tipo like $P{tipo} and detSeparateSales.created_at between $P{fechaini} and $P{fechafin}) AS totalVentas,
+(select ROUND(SUM(salePayments.Acuenta),2) from detSeparateSales inner join separateSales on separateSales.id=detSeparateSales.separateSale_id left join salePayments on salePayments.separateSale_id=detSeparateSales.id where separateSales.estado like $P{estado} and separateSales.tipo like $P{tipo} and detSeparateSales.created_at between $P{fechaini} and $P{fechafin}) AS totAcuenta,
+
+(select ROUND(SUM(salePayments.Saldo),2) from detSeparateSales inner join separateSales on separateSales.id=detSeparateSales.separateSale_id left join salePayments on salePayments.separateSale_id=detSeparateSales.id where separateSales.estado like $P{estado} and separateSales.tipo like $P{tipo} and detSeparateSales.created_at between $P{fechaini} and $P{fechafin}) AS totoSaldo,
+ ROUND(SUM(detPres.suppPri*detSeparateSales.cantidad),2) as totalPrecioCompra1, ROUND(SUM(detSeparateSales.subTotal),2)as totalVentas1, ROUND(SUM(detSeparateSales.subTotal-(detPres.suppPri*detSeparateSales.cantidad)),2) as totalGanacia1,ROUND(SUM(salePayments.Acuenta),2) as totAcuenta1,ROUND(SUM(salePayments.Saldo),2) AS totoSaldo1 from detSeparateSales
                      left join detPres on detPres.id=detSeparateSales.detPre_id
                      left join variants on variants.id=detPres.variant_id
                      left join products on products.id=variants.product_id
@@ -36,10 +43,15 @@
 	</queryString>
 	<field name="totalUnidades" class="java.math.BigDecimal"/>
 	<field name="totalPrecioCompra" class="java.math.BigDecimal"/>
-	<field name="totalVentas" class="java.math.BigDecimal"/>
 	<field name="totalGanacia" class="java.math.BigDecimal"/>
+	<field name="totalVentas" class="java.math.BigDecimal"/>
 	<field name="totAcuenta" class="java.math.BigDecimal"/>
 	<field name="totoSaldo" class="java.math.BigDecimal"/>
+	<field name="totalPrecioCompra1" class="java.math.BigDecimal"/>
+	<field name="totalVentas1" class="java.math.BigDecimal"/>
+	<field name="totalGanacia1" class="java.math.BigDecimal"/>
+	<field name="totAcuenta1" class="java.math.BigDecimal"/>
+	<field name="totoSaldo1" class="java.math.BigDecimal"/>
 	<background>
 		<band/>
 	</background>
@@ -61,7 +73,7 @@
 		<band/>
 	</columnHeader>
 	<detail>
-		<band height="134">
+		<band height="136">
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="67" height="20" forecolor="#006699" backcolor="#D1B5B5" uuid="bf0fa06c-fac4-4d5c-a847-1efaa37142af"/>
 				<textElement textAlignment="Center">
@@ -118,23 +130,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA["S/."+$F{totalVentas}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement x="-20" y="31" width="575" height="77" uuid="bb99caac-c7ca-4dd6-aa30-e4a6e3920630"/>
-				<subreportParameter name="fechaini">
-					<subreportParameterExpression><![CDATA[$P{fechaini}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="fechafin">
-					<subreportParameterExpression><![CDATA[$P{fechafin}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="tipo">
-					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="estado">
-					<subreportParameterExpression><![CDATA[$P{estado}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ReporteVentas2.jasper"]]></subreportExpression>
-			</subreport>
 			<textField>
 				<reportElement positionType="FixRelativeToBottom" x="383" y="108" width="25" height="20" uuid="9ddb159e-9329-4c29-9bf2-d404670c5ccd"/>
 				<textElement verticalAlignment="Middle">
@@ -177,6 +172,26 @@
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
+			<subreport>
+				<reportElement x="-17" y="28" width="572" height="80" uuid="995bc2bf-71af-49b6-9a30-9cb1fcf8e08c"/>
+				<subreportParameter name="fechaini">
+					<subreportParameterExpression><![CDATA[$P{fechaini}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fechafin">
+					<subreportParameterExpression><![CDATA[$P{fechafin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tipo">
+					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="estado">
+					<subreportParameterExpression><![CDATA[$P{estado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ReporteVentas2.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>

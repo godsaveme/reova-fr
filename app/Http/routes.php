@@ -146,6 +146,7 @@ Route::post('api/products/actualizarDsctoGeneral','ProductsController@actualizar
 //---------------------
 Route::get('api/productsSearchsku/misDatos/{store?}/{were?}/{q?}',['as'=>'person_find', 'uses'=>'ProductsController@searchsku']);
 Route::get('api/products/misDatos/{store?}/{were?}/{q?}',['as'=>'person_find', 'uses'=>'ProductsController@misDatos']);
+Route::get('api/productslalal/misDatos/{store?}/{were?}/{q?}',['as'=>'person_find', 'uses'=>'ProductsController@misDatos2']);
 Route::get('api/productsVariantes/misDatos/{store?}/{were?}/{q?}',['as'=>'person_find', 'uses'=>'ProductsController@misDatosVariantes']);
 Route::get('api/productsFavoritos/misDatos/{store?}/{were?}/{q?}',['as'=>'person_find', 'uses'=>'ProductsController@favoritos']);
 Route::get('api/variantsAllInventary/misDatos/{store?}/{were?}/{q?}',['as'=>'person_find', 'uses'=>'ProductsController@variantsAllInventary']);

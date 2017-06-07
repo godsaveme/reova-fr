@@ -133,7 +133,7 @@ class SalesController extends Controller
         //---create movimiento---
             $movimiento = $request->movimiento;
             $detCashrepo;
-            $movimiento['observacion']=$temporal;
+            $movimiento['observacion']="Temporal";
             $detCashrepo = new DetCashRepo;
             $movimientoSave=$detCashrepo->getModel();
 

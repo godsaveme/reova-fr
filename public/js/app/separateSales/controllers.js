@@ -698,11 +698,19 @@
                 }
                 $scope.atributoSelected=undefined;
                 $scope.getAtributos = function(val) {
+                    if($scope.sale.tipo==2){
+                        return crudServiceSeparates.reportProWare('productslalal',$scope.store.id,$scope.warehouse.id,val).then(function(response){
+                    return response.map(function(item){
+                      return item;
+                    });
+                  });
+                    }else{
                   return crudServiceSeparates.reportProWare('products',$scope.store.id,$scope.warehouse.id,val).then(function(response){
                     return response.map(function(item){
                       return item;
                     });
                   });
+              }
                 };
 
                 $scope.varianteSkuSelected;

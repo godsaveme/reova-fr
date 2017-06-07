@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select cashes.id,cashes.fechaInicio,cashMotives.nombre,montoMovimientoTarjeta as totMovTar,montoMovimientoEfectivo as totMovEfec ,cashMotives.observacion from detCash inner join cashMotives on cashMotives.id=detCash.cashMotive_id inner join cashes on cashes.id=detCash.cash_id where cashMotives.tipo="+" and cashes.id=$P{cash_id} group by detCash.id order by cashMotives.tipo;]]>
+		<![CDATA[select cashes.id,cashes.fechaInicio,cashMotives.nombre,montoMovimientoTarjeta as totMovTar,montoMovimientoEfectivo as totMovEfec ,detCash.observacion from detCash inner join cashMotives on cashMotives.id=detCash.cashMotive_id inner join cashes on cashes.id=detCash.cash_id where cashMotives.tipo="+" and cashes.id=$P{cash_id} group by detCash.id order by cashMotives.tipo;]]>
 	</queryString>
 	<field name="id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -45,32 +45,32 @@
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="92" y="0" width="142" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="cbb38474-f59f-499e-bc66-e53920253b84"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="92" y="0" width="165" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="cbb38474-f59f-499e-bc66-e53920253b84"/>
+				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tipo de Movimiento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="234" y="0" width="76" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9b3a37bd-4d0e-4ad3-b72d-f2a71ace06cb"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="257" y="0" width="87" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9b3a37bd-4d0e-4ad3-b72d-f2a71ace06cb"/>
+				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mov.Tarjeta]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="310" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="dbe63c95-c44e-460a-8f45-6d77793be72e"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="344" y="0" width="81" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="dbe63c95-c44e-460a-8f45-6d77793be72e"/>
+				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mov. Efectivo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="402" y="0" width="150" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="ce3c0b82-0190-4290-9eb9-7467b6f6cafa"/>
+				<reportElement mode="Opaque" x="425" y="0" width="150" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="ce3c0b82-0190-4290-9eb9-7467b6f6cafa"/>
 				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[observacion]]></text>
+				<text><![CDATA[Descripcion]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -87,32 +87,32 @@
 				<textFieldExpression><![CDATA[$F{fechaInicio}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="92" y="0" width="154" height="20" uuid="33308a65-baf0-450d-9f83-301abb462c28"/>
+				<reportElement x="92" y="0" width="165" height="20" uuid="33308a65-baf0-450d-9f83-301abb462c28"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="246" y="0" width="75" height="20" uuid="2dc9a974-4aaf-4c91-9660-aa616ddd9495"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["S/."+$F{totMovTar}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="321" y="0" width="81" height="20" uuid="67991750-4b79-4d52-afae-4f62ae47aad5"/>
+				<reportElement x="344" y="0" width="81" height="20" uuid="67991750-4b79-4d52-afae-4f62ae47aad5"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["S/."+$F{totMovEfec}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="402" y="0" width="150" height="20" uuid="5d3a9798-74d7-4ecb-8a6c-35d90ae181f8"/>
+				<reportElement x="425" y="1" width="150" height="20" uuid="5d3a9798-74d7-4ecb-8a6c-35d90ae181f8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="257" y="1" width="87" height="20" uuid="2dc9a974-4aaf-4c91-9660-aa616ddd9495"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["S/."+$F{totMovTar}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -915,12 +915,21 @@ $scope.validaDocumento=function(){
 
                 $scope.atributoSelected=undefined;
                 $scope.getAtributos = function(val) {
+                /*if($scope.sale.tipo==2){
+                    return crudServiceOrders.reportProWare('productslalal',$scope.store.id,$scope.warehouse.id,val).then(function(response){
+                    return response.map(function(item){
+                        //$log.log(item);
+                      return item;
+                    });
+                  });
+                }else{*/
                   return crudServiceOrders.reportProWare('products',$scope.store.id,$scope.warehouse.id,val).then(function(response){
                     return response.map(function(item){
                         //$log.log(item);
                       return item;
                     });
                   });
+              //}
                 };
                 $scope.customersSelected=undefined;
                 $scope.getcustomers = function(val) {
@@ -1519,15 +1528,16 @@ $scope.validaDocumento=function(){
                         //$log.log($scope.atributoSelected+"aca");
                     crudServiceOrders.reportProWare('productsVariantes',$scope.store.id,$scope.warehouse.id,$scope.atributoSelected.vari).then(function(data){    
                         $scope.presentations = data;
+                        //alert( $scope.presentations.pvp);
                         //$log.log($scope.presentations);
                         if($scope.base){
                             if ($scope.atributoSelected.NombreAtributos!=undefined) {
                                 if (($scope.atributoSelected.Stock-$scope.atributoSelected.stockPedidos-$scope.atributoSelected.stockSeparados)>0) {       
                                     $scope.atributoSelected.cantidad=1;
-                                    $scope.atributoSelected.descuento=0;
-                                    $scope.atributoSelected.subTotal=$scope.atributoSelected.cantidad*Number($scope.atributoSelected.precioProducto);
-                                    $scope.atributoSelected.precioVenta=Number($scope.atributoSelected.precioProducto);
-                    
+                                    $scope.atributoSelected.descuento=$scope.atributoSelected.dscto;
+                                    $scope.atributoSelected.subTotal=$scope.atributoSelected.cantidad*Number($scope.atributoSelected.pvp);
+                                    $scope.atributoSelected.precioVenta=Number($scope.atributoSelected.pvp);
+                                    
                                     $scope.compras.push($scope.atributoSelected);  
 
                                     $scope.sale.montoTotal=$scope.sale.montoTotalSinDescuento+$scope.atributoSelected.subTotal;
